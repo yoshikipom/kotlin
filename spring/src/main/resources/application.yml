@@ -1,0 +1,21 @@
+spring.application.name: spring
+
+# resilient4j
+management.endpoints.web.exposure.include: '*'
+management.endpoint.health.show-details: always
+
+management.health.diskspace.enabled: false
+management.health.circuitbreakers.enabled: true
+management.health.ratelimiters.enabled: true
+
+resilience4j.circuitbreaker:
+  instances:
+    backend:
+      registerHealthIndicator: true
+      slidingWindowType: COUNT_BASED
+      slidingWindowSize: 3
+      minimumNumberOfCalls: 1
+      permittedNumberOfCallsInHalfOpenState: 3
+      automaticTransitionFromOpenToHalfOpenEnabled: true
+      waitDurationInOpenState: 10s
+      failureRateThreshold: 50
